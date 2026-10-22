@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GitLarping | Laur Francisco</title>
+  <meta name="description" content="GitLarping: Lauren Kailey A. Francisco's one-page Software Configuration Management portfolio on version control, CI/CD and DevOps, deployed by its own GitHub Actions pipeline.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="GitLarping, back to top">git<span aria-hidden="true">/</span>larping</a>
+    <a class="pill pill--ink" href="#contact">Let's talk</a>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero__grid" aria-hidden="true"></div>
+      <div class="hero__dots" aria-hidden="true"></div>
+      <div class="hero__content">
+        <p class="hero__eyebrow">GitLarping &middot; Laur Francisco &middot; CS Student</p>
+        <h1 class="hero__title" id="hero-title">Hi, I'm Laur. I build software that is versioned, tested and shipped automatically.</h1>
+        <p class="hero__lead">Every change to this page goes through Git, ESLint and GitHub Actions before it goes live.</p>
+      </div>
+      <p class="hero__scroll" aria-hidden="true">Scroll</p>
+    </section>
+
+    <section class="services" id="what-is-scm" aria-labelledby="scm-title">
+      <div class="container">
+        <h2 class="section-title" id="scm-title">What is SCM?</h2>
+        <p class="section-lead">
+          Software Configuration Management is the discipline of identifying, controlling and tracking
+          every change to a software system, so a team always knows what was built, from what, and why.
+        </p>
+
+        <ul class="services__list" role="list">
+          <li class="service">
+            <article class="service__card service__card--one">
+              <div class="service__halftone" aria-hidden="true"></div>
+              <div class="service__body">
+                <h3 class="service__title"><span>Version Control</span><span class="service__dots" aria-hidden="true"></span></h3>
+                <p>Git records every change as a commit with an author, a timestamp and a reason. Branches let work happen in parallel; pull requests bring it back together under review.</p>
+              </div>
+            </article>
+            <p class="service__caption">Configuration identification and change control: the history is the source of truth.</p>
+          </li>
+          <li class="service">
+            <article class="service__card service__card--two">
+              <div class="service__halftone" aria-hidden="true"></div>
+              <div class="service__body">
+                <h3 class="service__title"><span>CI/CD</span><span class="service__dots" aria-hidden="true"></span></h3>
+                <p>Continuous Integration builds and checks every push automatically. Continuous Delivery packages what passed and deploys it, so releases are small, frequent and repeatable.</p>
+              </div>
+            </article>
+            <p class="service__caption">If a check fails, the release stops. Nobody has to remember to run it.</p>
+          </li>
+          <li class="service">
+            <article class="service__card service__card--three">
+              <div class="service__halftone" aria-hidden="true"></div>
+              <div class="service__body">
+                <h3 class="service__title"><span>DevOps</span><span class="service__dots" aria-hidden="true"></span></h3>
+                <p>The culture that joins development and operations: shared ownership, automation over manual steps, and fast feedback from production back to the people writing the code.</p>
+              </div>
+            </article>
+            <p class="service__caption">Tools make it possible; habits make it work.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="pipeline-section" id="pipeline" aria-labelledby="pipeline-title">
+      <div class="container">
+        <div class="panel">
+          <h2 class="panel__title" id="pipeline-title">
+            <span class="selection">
+              <span class="selection__frame" aria-hidden="true"></span>
+              <span class="selection__handle selection__handle--tl" aria-hidden="true"></span>
+              <span class="selection__handle selection__handle--tr" aria-hidden="true"></span>
+              <span class="selection__handle selection__handle--bl" aria-hidden="true"></span>
+              <span class="selection__handle selection__handle--br" aria-hidden="true"></span>
+              From commit to live
+            </span>
+          </h2>
+          <p class="panel__lead">Four stages, defined in <code>.github/workflows/deploy.yml</code>. If any stage fails, nothing after it runs.</p>
+
+          <div class="pipeline">
+            <div class="pipeline__track" aria-hidden="true">
+              <div class="pipeline__progress"></div>
+            </div>
+            <ol class="pipeline__steps">
+              <li class="pipeline__step">
+                <span class="pipeline__dot" aria-hidden="true"></span>
+                <h3 class="pipeline__name"><span class="pipeline__num">01</span>Push</h3>
+                <p>A commit lands on <code>main</code> (or someone clicks "Run workflow"). GitHub Actions starts a fresh runner.</p>
+              </li>
+              <li class="pipeline__step">
+                <span class="pipeline__dot" aria-hidden="true"></span>
+                <h3 class="pipeline__name"><span class="pipeline__num">02</span>Lint</h3>
+                <p><code>npm ci</code> installs the locked toolchain, then <code>npm run lint</code> checks the JavaScript. Any error stops the pipeline here.</p>
+              </li>
+              <li class="pipeline__step">
+                <span class="pipeline__dot" aria-hidden="true"></span>
+                <h3 class="pipeline__name"><span class="pipeline__num">03</span>Package</h3>
+                <p>Only the files the site needs (<code>index.html</code>, <code>css/</code>, <code>js/</code>) are copied into <code>_site</code> and uploaded as an artifact.</p>
+              </li>
+              <li class="pipeline__step">
+                <span class="pipeline__dot" aria-hidden="true"></span>
+                <h3 class="pipeline__name"><span class="pipeline__num">04</span>Deploy</h3>
+                <p>The artifact is published to GitHub Pages and the live URL is shown on the workflow run.</p>
+              </li>
+            </ol>
+          </div>
+
+          <a class="pill pill--blue pill--block" href="https://docs.github.com/en/actions">Learn GitHub Actions</a>
+        </div>
+        <p class="caption-dark">Lint gates deploy: <code>needs: lint</code> means a broken build never reaches the live site.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="contact">
+      <div class="contact__floats">
+        <figure class="float float--graph">
+          <svg viewBox="0 0 320 200" role="img" aria-labelledby="graph-title graph-desc">
+            <title id="graph-title">Git branch diagram</title>
+            <desc id="graph-desc">A main branch with a feature branch splitting off, receiving two commits, and merging back into main.</desc>
+            <path class="graph__line graph__line--main" d="M20 140 H300" />
+            <path class="graph__line graph__line--feature" d="M80 140 C110 140 110 60 140 60 H220 C250 60 250 140 280 140" />
+            <circle class="graph__commit" cx="40" cy="140" r="9" />
+            <circle class="graph__commit" cx="80" cy="140" r="9" />
+            <circle class="graph__commit graph__commit--feature" cx="160" cy="60" r="9" />
+            <circle class="graph__commit graph__commit--feature" cx="210" cy="60" r="9" />
+            <circle class="graph__commit" cx="180" cy="140" r="9" />
+            <circle class="graph__commit graph__commit--merge" cx="280" cy="140" r="12" />
+            <text class="graph__label" x="20" y="178">main</text>
+            <text class="graph__label graph__label--feature" x="140" y="35">feature/login</text>
+          </svg>
+        </figure>
+        <span class="float float--chip float--ok" aria-hidden="true">&#10003; lint passed</span>
+        <span class="float float--chip float--tag" aria-hidden="true">v1.0.0</span>
+        <span class="float float--chip float--cursor" aria-hidden="true">git push origin main</span>
+      </div>
+
+      <div class="contact__text">
+        <h2 class="contact__title">
+          Let's ship something
+          <span class="selection selection--fill">
+            <span class="selection__fill" aria-hidden="true"></span>
+            <span class="selection__handle selection__handle--tl" aria-hidden="true"></span>
+            <span class="selection__handle selection__handle--br" aria-hidden="true"></span>
+            <span class="selection__text">together.</span>
+          </span>
+        </h2>
+        <p class="contact__lead">Open to internships and group projects where the pipeline matters as much as the code.</p>
+        <a class="pill pill--blue pill--block" href="mailto:laurcodes19@gmail.com">Get in touch</a>
+      </div>
+    </div>
+
+    <div class="legal">
+      <p>&copy; <span id="year">2026</span> Lauren Kailey A. Francisco &middot; GitLarping &middot; SCM class activity &middot; Built with Git, ESLint and GitHub Actions</p>
+      <p><a href="#top">Back to top</a></p>
+    </div>
+  </footer>
+</body>
+</html>
