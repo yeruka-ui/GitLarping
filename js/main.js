@@ -1,4 +1,4 @@
-const INK = "#121213"
+const INK = "#121213";
 const FADED = "#d2d2d7";
 
 function setFooterYear() {
