@@ -13,7 +13,7 @@ function getCommitGreeting(hour) {
   if (!Number.isInteger(hour) || hour < 0 || hour > 23) {
     return "Hello, visitor. Ready to commit?";
   }
-  if (hour < 9) {
+  if (hour < 12) {
     return "Good morning. Time to pull the latest changes.";
   }
   if (hour < 18) {
