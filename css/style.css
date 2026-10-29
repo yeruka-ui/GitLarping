@@ -231,6 +231,10 @@ body.is-dark .pill--ink {
   line-height: 1.3;
 }
 
+.hero__greeting {
+  margin: 1.5rem 0 0;
+}
+
 /* Words are only split by JS; inline-block lets them translate individually. */
 .word {
   display: inline-block;

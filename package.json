@@ -5,11 +5,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "lint": "eslint js/"
+    "lint": "eslint js/ tests/",
+    "test": "jest"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.13.0",
-    "globals": "^17.13.0"
+    "globals": "^17.13.0",
+    "jest": "^30.5.2",
+    "jest-environment-jsdom": "^30.5.2"
   }
 }

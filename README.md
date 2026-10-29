@@ -1,32 +1,35 @@
 # GitLarping
 
-[![Lint and Deploy to GitHub Pages](https://github.com/yeruka-ui/GitLarping/actions/workflows/deploy.yml/badge.svg)](https://github.com/yeruka-ui/GitLarping/actions/workflows/deploy.yml)
+[![Lint, Test and Deploy to GitHub Pages](https://github.com/yeruka-ui/GitLarping/actions/workflows/deploy.yml/badge.svg)](https://github.com/yeruka-ui/GitLarping/actions/workflows/deploy.yml)
 
 GitLarping is Lauren Kailey A. Francisco's (Laur) one-page portfolio for a Software Configuration Management class activity. It explains version control, CI/CD and DevOps, and it is deployed by the same lint-gated pipeline it describes.
 
 - **Static site:** `index.html`, `css/style.css` and `js/main.js`. No frameworks, no bundler.
 - **Animations:** GSAP 3 and ScrollTrigger, loaded from cdnjs. Animations are skipped when the visitor has `prefers-reduced-motion: reduce` set.
-- **Quality gate:** ESLint (flat config in `eslint.config.js`).
+- **Quality gates:** ESLint (flat config in `eslint.config.js`) and Jest (tests in `tests/`, jsdom environment).
+- **On-load function:** `showCommitGreeting()` in `js/main.js` runs when the page loads and writes a time-of-day greeting from `getCommitGreeting(hour)` into `#greeting`.
 - **CI/CD:** GitHub Actions publishes the site to GitHub Pages.
 
 ## How the pipeline works
 
-The workflow is in `.github/workflows/deploy.yml`. It runs on every push to `main`, and you can also start it by hand from the Actions tab (`workflow_dispatch`).
+The workflow is in `.github/workflows/deploy.yml`. Lint and test run on every push to any branch; only pushes to `main` deploy, and you can also start it by hand from the Actions tab (`workflow_dispatch`).
 
 | Stage | Job | What happens |
 |---|---|---|
 | Push | (trigger) | A commit lands on `main`, or someone clicks **Run workflow**. |
 | Lint | `lint` | Checkout, set up Node LTS with the npm cache, `npm ci`, `npm run lint`. |
+| Test | `test` | Runs after lint passes. Checkout, Node LTS, `npm ci`, `npm test` (Jest). |
 | Package | `deploy` | Copies only `index.html`, `css/` and `js/` into `_site/`, then uploads it as a Pages artifact. |
 | Deploy | `deploy` | `actions/deploy-pages` publishes the artifact. The live URL appears on the run summary. |
 
-`deploy` has `needs: lint`, so **if lint fails, deploy does not run** and the live site stays on its last good version. The `pages` concurrency group makes deployments queue one at a time instead of cancelling each other.
+`test` has `needs: lint` and `deploy` has `needs: [lint, test]`, so **if lint or any test fails, deploy does not run** and the live site stays on its last good version. The `pages` concurrency group makes deployments queue one at a time instead of cancelling each other.
 
 ## Run locally
 
 ```bash
 npm install
 npm run lint
+npm test
 ```
 
 Open `index.html` in a browser, or serve the folder with any static server (for example `npx serve .`).

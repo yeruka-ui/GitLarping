@@ -8,6 +8,30 @@ function setFooterYear() {
   }
 }
 
+// Picks a commit-themed greeting for the visitor's local hour (0-23).
+function getCommitGreeting(hour) {
+  if (!Number.isInteger(hour) || hour < 0 || hour > 23) {
+    return "Hello, visitor. Ready to commit?";
+  }
+  if (hour < 12) {
+    return "Good morning. Time to pull the latest changes.";
+  }
+  if (hour < 18) {
+    return "Good afternoon. Keep those commits small.";
+  }
+  return "Good evening. Push before you log off.";
+}
+
+function showCommitGreeting(date = new Date()) {
+  const greetingEl = document.getElementById("greeting");
+  if (!greetingEl) {
+    return null;
+  }
+  const message = getCommitGreeting(date.getHours());
+  greetingEl.textContent = message;
+  return message;
+}
+
 function splitWords(el) {
   const words = el.textContent.trim().split(/\s+/);
   el.textContent = "";
@@ -240,6 +264,7 @@ function initAnimations() {
 
 function init() {
   setFooterYear();
+  showCommitGreeting();
 
   // If the CDN is blocked the page still works; it just doesn't animate.
   if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
@@ -250,3 +275,8 @@ function init() {
 }
 
 init();
+
+// Lets Jest import the functions; browsers have no `module`, so this is skipped there.
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { getCommitGreeting, showCommitGreeting };
+}

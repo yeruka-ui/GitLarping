@@ -15,7 +15,9 @@ export default [
       globals: {
         ...globals.browser,
         gsap: "readonly",
-        ScrollTrigger: "readonly"
+        ScrollTrigger: "readonly",
+        // Only defined under Jest; main.js checks for it before exporting.
+        module: "readonly"
       }
     },
     rules: {
@@ -24,6 +26,13 @@ export default [
       eqeqeq: "error",
       "no-undef": "error",
       quotes: ["error", "double"]
+    }
+  },
+  {
+    files: ["tests/**/*.test.cjs"],
+    languageOptions: {
+      sourceType: "commonjs",
+      globals: { ...globals.node, ...globals.jest, ...globals.browser }
     }
   }
 ];
